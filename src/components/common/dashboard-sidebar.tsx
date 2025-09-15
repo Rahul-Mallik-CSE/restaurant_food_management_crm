@@ -79,7 +79,7 @@ function DashboardSidebarContent() {
             <Link href="/">
               {isCollapsed ? (
                 <Image
-                  src="/logo2.png"
+                  src="/food-icon-mini.png"
                   alt="logo"
                   width={isCollapsed ? 40 : 140}
                   height={isCollapsed ? 40 : 140}
@@ -87,11 +87,11 @@ function DashboardSidebarContent() {
                 />
               ) : (
                 <Image
-                  src="/image.png"
+                  src="/food-icon.png"
                   alt="logo"
                   width={isCollapsed ? 40 : 140}
                   height={isCollapsed ? 40 : 140}
-                  className={"h-8 w-24"}
+                  className={"h-10 w-16"}
                 />
               )}
             </Link>
