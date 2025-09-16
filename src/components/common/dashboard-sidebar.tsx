@@ -6,13 +6,28 @@ import type React from "react";
 
 import Link from "next/link";
 import {
-  Users,
   LayoutGrid,
-  Crown,
-  CircleDollarSign,
   CircleUser,
+  BookText,
+  BadgePercent,
+  ClipboardClock,
+  Bike,
+  Settings,
+  ShoppingBag,
+  Plus,
+  List,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
+import { GoCreditCard } from "react-icons/go";
+import { TbMessage2Dollar } from "react-icons/tb";
+import { MdInsertChartOutlined } from "react-icons/md";
 import { cn } from "@/lib/utils";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -26,7 +41,8 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import LogoutModal from "./logout-modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Button } from "../ui/button";
 
 // import { logout } from "@/service/authService";
 export default function DashboardSidebar() {
@@ -35,6 +51,7 @@ export default function DashboardSidebar() {
 
 function DashboardSidebarContent() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isOrdersExpanded, setIsOrdersExpanded] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const { state } = useSidebar();
@@ -46,6 +63,13 @@ function DashboardSidebarContent() {
     // localStorage.removeItem("accessToken");
     router.push("/signin");
   };
+
+  // Auto-expand orders menu when on orders-related pages
+  useEffect(() => {
+    if (pathname.startsWith("/orders") || pathname.startsWith("/new-order")) {
+      setIsOrdersExpanded(true);
+    }
+  }, [pathname]);
 
   if (
     pathname === "/signin" ||
@@ -113,33 +137,150 @@ function DashboardSidebarContent() {
             <NavItem
               href="/"
               icon={LayoutGrid}
-              label="Overview"
+              label="Dashboard"
               active={pathname === "/"}
               collapsed={isCollapsed}
             />
+
+            {/* Orders Management Collapsible Section */}
+            {!isCollapsed ? (
+              <Collapsible
+                open={isOrdersExpanded}
+                onOpenChange={setIsOrdersExpanded}
+              >
+                <CollapsibleTrigger asChild>
+                  <Button
+                    className={cn(
+                      "flex w-full items-center gap-3 px-4 py-0.5 transition-colors rounded-md hover:bg-transparent hover:text-custom-red",
+                      pathname.startsWith("/orders") ||
+                        pathname.startsWith("/new-order") ||
+                        pathname.startsWith("/order-list")
+                        ? " text-custom-red hover:!custom-red/90 "
+                        : "bg-transparent text-black hover:!bg-black/60 hover:!text-white"
+                    )}
+                  >
+                    <ShoppingBag size={18} />
+                    <span className="text-base flex-1 text-left">
+                      Orders Manage.
+                    </span>
+                    {isOrdersExpanded ? (
+                      <ChevronDown size={16} />
+                    ) : (
+                      <ChevronRight size={16} />
+                    )}
+                  </Button>
+                </CollapsibleTrigger>
+
+                <CollapsibleContent className="ml-4 space-y-1">
+                  <NavItem
+                    href="/new-order"
+                    icon={ShoppingBag}
+                    label="New Order"
+                    active={
+                      pathname.startsWith("/orders") ||
+                      pathname.startsWith("/new-order")
+                    }
+                    collapsed={isCollapsed}
+                  />
+
+                  <NavItem
+                    href="/order-list"
+                    icon={List}
+                    label="Order list"
+                    active={
+                      pathname.startsWith("/orders") ||
+                      pathname.startsWith("/order-list")
+                    }
+                    collapsed={isCollapsed}
+                  />
+                </CollapsibleContent>
+              </Collapsible>
+            ) : (
+              /* Collapsed state - show just the orders icon */
+              <NavItem
+                href="/orders"
+                icon={ShoppingBag}
+                label="Orders"
+                active={
+                  pathname.startsWith("/orders") ||
+                  pathname.startsWith("/new-order")
+                }
+                collapsed={isCollapsed}
+              />
+            )}
+
             <NavItem
-              href="/users"
-              icon={Users}
-              label="Users"
-              active={pathname === "/users" || pathname.startsWith("/users")}
+              href="/menu-manag"
+              icon={BookText}
+              label="Menu Manag."
+              active={
+                pathname === "/menu-manag" || pathname.startsWith("/menu-manag")
+              }
               collapsed={isCollapsed}
             />
 
             <NavItem
-              href="/package"
-              icon={Crown}
-              label="Package"
+              href="/promotion"
+              icon={BadgePercent}
+              label="Promotion"
               active={
-                pathname === "/package" || pathname.startsWith("/package")
+                pathname === "/promotion" || pathname.startsWith("/promotion")
               }
               collapsed={isCollapsed}
             />
             <NavItem
               href="/payment"
-              icon={CircleDollarSign}
+              icon={GoCreditCard}
               label="Payment"
               active={
                 pathname === "/payment" || pathname.startsWith("/payment")
+              }
+              collapsed={isCollapsed}
+            />
+            <NavItem
+              href="/withdraw-request"
+              icon={TbMessage2Dollar}
+              label="Withdraw Request"
+              active={
+                pathname === "/withdraw-request" ||
+                pathname.startsWith("/withdraw-request")
+              }
+              collapsed={isCollapsed}
+            />
+            <NavItem
+              href="/schedule"
+              icon={ClipboardClock}
+              label="Schedule"
+              active={
+                pathname === "/schedule" || pathname.startsWith("/schedule")
+              }
+              collapsed={isCollapsed}
+            />
+            <NavItem
+              href="/rider-manag"
+              icon={Bike}
+              label="Rider Manag."
+              active={
+                pathname === "/rider-manag" ||
+                pathname.startsWith("/rider-manag")
+              }
+              collapsed={isCollapsed}
+            />
+            <NavItem
+              href="/analytics"
+              icon={MdInsertChartOutlined}
+              label="Analytics"
+              active={
+                pathname === "/analytics" || pathname.startsWith("/analytics")
+              }
+              collapsed={isCollapsed}
+            />
+            <NavItem
+              href="/settings"
+              icon={Settings}
+              label="Settings"
+              active={
+                pathname === "/settings" || pathname.startsWith("/settings")
               }
               collapsed={isCollapsed}
             />
