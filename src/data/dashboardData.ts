@@ -33,3 +33,120 @@ export const dashboardMetrics: DashboardMetric[] = [
     changeType: "increase",
   },
 ];
+
+// Define the RecentTransection interface
+export interface RecentTransection {
+  orderId: string;
+  name: string;
+  amount: string;
+}
+
+export const RecentTransections: RecentTransection[] = [
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+  { orderId: "#123402", name: "John Doe", amount: "$32.26" },
+];
+
+export interface RecentOrder {
+  id: string;
+  customer: string;
+  items: string;
+  amount: string;
+  status: string;
+  statusColor: string;
+}
+
+export const RecentOrders: RecentOrder[] = [
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Pending",
+    statusColor: "bg-orange-100 text-orange-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Ready",
+    statusColor: "bg-green-100 text-green-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Delivered",
+    statusColor: "bg-blue-100 text-blue-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Ready",
+    statusColor: "bg-green-100 text-green-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Delivered",
+    statusColor: "bg-blue-100 text-blue-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Pending",
+    statusColor: "bg-orange-100 text-orange-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Ready",
+    statusColor: "bg-green-100 text-green-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Delivered",
+    statusColor: "bg-blue-100 text-blue-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Ready",
+    statusColor: "bg-green-100 text-green-800",
+  },
+  {
+    id: "#1234",
+    customer: "John Doe",
+    items: "Burger, Fries",
+    amount: "$12",
+    status: "Delivered",
+    statusColor: "bg-blue-100 text-blue-800",
+  },
+];
