@@ -151,17 +151,17 @@ function DashboardSidebarContent() {
                 <CollapsibleTrigger asChild>
                   <Button
                     className={cn(
-                      "flex w-full items-center gap-3 px-4 py-0.5 transition-colors rounded-md hover:bg-transparent hover:text-custom-red",
+                      "flex w-full items-center gap-3 px-0 py-0.5 transition-colors rounded-md hover:bg-transparent hover:text-custom-red",
                       pathname.startsWith("/orders") ||
                         pathname.startsWith("/new-order") ||
                         pathname.startsWith("/order-list")
-                        ? " text-custom-red hover:!custom-red/90 "
-                        : "bg-transparent text-black hover:!bg-black/60 hover:!text-white"
+                        ? "bg-transparent text-custom-red hover:!bg-transparent hover:!text-custom-red"
+                        : "bg-transparent text-black hover:!bg-transparent hover:!text-custom-red"
                     )}
                   >
                     <ShoppingBag size={18} />
                     <span className="text-base flex-1 text-left">
-                      Orders Manage.
+                      Orders Manag.
                     </span>
                     {isOrdersExpanded ? (
                       <ChevronDown size={16} />
@@ -171,10 +171,10 @@ function DashboardSidebarContent() {
                   </Button>
                 </CollapsibleTrigger>
 
-                <CollapsibleContent className="ml-4 space-y-1">
+                <CollapsibleContent className="ml-4 space-y-1 pt-2 ">
                   <NavItem
                     href="/new-order"
-                    icon={ShoppingBag}
+                    icon={Plus}
                     label="New Order"
                     active={
                       pathname.startsWith("/orders") ||
@@ -375,8 +375,8 @@ function NavItem({
               ? "flex items-center justify-center px-2 py-3 transition-colors rounded-full w-12 h-12 mx-auto"
               : "flex items-center gap-3 px-4 py-3 transition-colors rounded-md",
             active
-              ? "bg-black text-white hover:!bg-black hover:!text-white"
-              : "bg-transparent text-black hover:!bg-black/60 hover:!text-white"
+              ? "bg-custom-red/30 text-custom-red hover:!bg-custom-red/30 hover:!text-custom-red font-medium"
+              : "bg-transparent text-black hover:!bg-custom-red/10 hover:!text-custom-red font-medium"
           )}
         >
           <Icon size={collapsed ? 20 : 18} />
