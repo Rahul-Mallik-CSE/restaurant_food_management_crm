@@ -1,7 +1,7 @@
 /** @format */
 
+import type { RecentTransection } from "@/types/dashboardTypes";
 import React from "react";
-import { RecentTransection } from "@/data/dashboardData";
 
 interface TransactionCardProps {
   order: RecentTransection;

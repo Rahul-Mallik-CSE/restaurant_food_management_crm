@@ -1,11 +1,10 @@
 /** @format */
 
-export interface DashboardMetric {
-  title: string;
-  value: string | number;
-  change: number;
-  changeType: "increase" | "decrease";
-}
+import type {
+  DashboardMetric,
+  RecentOrder,
+  RecentTransection,
+} from "@/types/dashboardTypes";
 
 export const dashboardMetrics: DashboardMetric[] = [
   {
@@ -34,13 +33,6 @@ export const dashboardMetrics: DashboardMetric[] = [
   },
 ];
 
-// Define the RecentTransection interface
-export interface RecentTransection {
-  orderId: string;
-  name: string;
-  amount: string;
-}
-
 export const RecentTransections: RecentTransection[] = [
   { orderId: "#123402", name: "John Doe", amount: "$32.26" },
   { orderId: "#123402", name: "John Doe", amount: "$32.26" },
@@ -58,15 +50,6 @@ export const RecentTransections: RecentTransection[] = [
   { orderId: "#123402", name: "John Doe", amount: "$32.26" },
   { orderId: "#123402", name: "John Doe", amount: "$32.26" },
 ];
-
-export interface RecentOrder {
-  id: string;
-  customer: string;
-  items: string;
-  amount: string;
-  status: string;
-  statusColor: string;
-}
 
 export const RecentOrders: RecentOrder[] = [
   {

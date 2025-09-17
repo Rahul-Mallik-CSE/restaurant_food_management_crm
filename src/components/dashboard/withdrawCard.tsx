@@ -3,6 +3,7 @@
 import { ArrowUpIcon } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
+import WithdrawModal from "./withdrawModal";
 
 const WithdrawCard = () => {
   return (
@@ -17,12 +18,14 @@ const WithdrawCard = () => {
             <ArrowUpIcon className="w-4 h-4 mr-1" />
             2.4% Since Last Week
           </div>
-          <Button
-            variant="secondary"
-            className="bg-white text-gray-900 hover:bg-gray-100"
-          >
-            Withdraw
-          </Button>
+          <WithdrawModal>
+            <Button
+              variant="secondary"
+              className="bg-white text-gray-900 hover:bg-gray-100"
+            >
+              Withdraw
+            </Button>
+          </WithdrawModal>
         </div>
       </div>
     </div>

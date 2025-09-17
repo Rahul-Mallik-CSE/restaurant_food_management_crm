@@ -2,18 +2,14 @@
 
 import { ArrowUpIcon, ArrowDownIcon } from "lucide-react";
 
+import type { DashboardMetric } from "@/types/dashboardTypes";
+
 interface MetricsCardProps {
-  title: string;
-  value: string | number;
-  change: number;
-  changeType: "increase" | "decrease";
+  metric: DashboardMetric;
 }
 
 export default function MetricsCard({
-  title,
-  value,
-  change,
-  changeType,
+  metric: { title, value, change, changeType },
 }: MetricsCardProps) {
   const shouldShowDollar =
     title.toLowerCase().includes("revenue") ||

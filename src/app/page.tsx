@@ -29,13 +29,7 @@ export default function Home() {
         {/* Metrics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {dashboardMetrics.map((metric, index) => (
-            <MetricsCard
-              key={index}
-              title={metric.title}
-              value={metric.value}
-              change={metric.change}
-              changeType={metric.changeType}
-            />
+            <MetricsCard key={index} metric={metric} />
           ))}
         </div>
 

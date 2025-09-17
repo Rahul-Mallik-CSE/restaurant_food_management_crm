@@ -1,7 +1,7 @@
 /** @format */
 
+import type { RecentOrder } from "@/types/dashboardTypes";
 import React from "react";
-import { RecentOrder } from "@/data/dashboardData";
 
 interface OrderCardProps {
   order: RecentOrder;
