@@ -4,6 +4,7 @@ import MetricsCard from "@/components/dashboard/matricsCard";
 import WithdrawCard from "@/components/dashboard/withdrawCard";
 import TransactionCard from "@/components/dashboard/transectionCard";
 import OrderCard from "@/components/dashboard/orderCard";
+import Header from "@/components/common/header";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   dashboardMetrics,
@@ -16,15 +17,10 @@ export default function Home() {
     <div className="min-h-screen bg-transparent pt-2 md:pt-6">
       <div className="max-w-full mx-auto space-y-6">
         {/* Header */}
-        <div className="space-y-1">
-          <h1 className="text-xl md:text-3xl font-semibold text-black">
-            Dashboard
-          </h1>
-          <p className="text-black/50 text-sm md:text-base">
-            Welcome back! Here&apos;s what&apos;s happening with your restaurant
-            today.
-          </p>
-        </div>
+        <Header
+          title="Dashboard"
+          description="Welcome back! Here's what's happening with your restaurant today."
+        />
 
         {/* Metrics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
