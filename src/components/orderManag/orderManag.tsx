@@ -4,7 +4,6 @@
 
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import OrderCard from "./orderCard";
 import { Order, OrderStatus } from "@/types/orderManagTypes";
 import { orderManagementData } from "@/data/orderManagData";
@@ -44,6 +43,32 @@ const OrderManagement: React.FC<OrderManagementProps> = ({
     setOrders((prevOrders) =>
       prevOrders.map((order) =>
         order.id === orderId ? { ...order, status: newStatus } : order
+      )
+    );
+  };
+
+  // Handle assign driver
+  const handleAssignDriver = (
+    orderId: string,
+    driverData: {
+      name: string;
+      phone: string;
+      eta: string;
+    }
+  ) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId
+          ? {
+              ...order,
+              assignedDriver: {
+                id: `driver_${Date.now()}`,
+                name: driverData.name,
+                phone: driverData.phone,
+                eta: driverData.eta,
+              },
+            }
+          : order
       )
     );
   };
@@ -95,67 +120,71 @@ const OrderManagement: React.FC<OrderManagementProps> = ({
           </Button>
         </div>
 
-        <ScrollArea className="h-[calc(100vh-300px)]">
-          <TabsContent value="all" className="space-y-4">
-            {getFilteredOrders().map((order) => (
-              <OrderCard
-                key={order.id}
-                order={order}
-                onStatusChange={handleStatusChange}
-              />
-            ))}
-          </TabsContent>
+        <TabsContent value="all" className="space-y-4">
+          {getFilteredOrders().map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onStatusChange={handleStatusChange}
+              onAssignDriver={handleAssignDriver}
+            />
+          ))}
+        </TabsContent>
 
-          <TabsContent value="pending" className="space-y-4">
-            {getFilteredOrders().map((order) => (
-              <OrderCard
-                key={order.id}
-                order={order}
-                onStatusChange={handleStatusChange}
-              />
-            ))}
-          </TabsContent>
+        <TabsContent value="pending" className="space-y-4">
+          {getFilteredOrders().map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onStatusChange={handleStatusChange}
+              onAssignDriver={handleAssignDriver}
+            />
+          ))}
+        </TabsContent>
 
-          <TabsContent value="preparing" className="space-y-4">
-            {getFilteredOrders().map((order) => (
-              <OrderCard
-                key={order.id}
-                order={order}
-                onStatusChange={handleStatusChange}
-              />
-            ))}
-          </TabsContent>
+        <TabsContent value="preparing" className="space-y-4">
+          {getFilteredOrders().map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onStatusChange={handleStatusChange}
+              onAssignDriver={handleAssignDriver}
+            />
+          ))}
+        </TabsContent>
 
-          <TabsContent value="ready" className="space-y-4">
-            {getFilteredOrders().map((order) => (
-              <OrderCard
-                key={order.id}
-                order={order}
-                onStatusChange={handleStatusChange}
-              />
-            ))}
-          </TabsContent>
+        <TabsContent value="ready" className="space-y-4">
+          {getFilteredOrders().map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onStatusChange={handleStatusChange}
+              onAssignDriver={handleAssignDriver}
+            />
+          ))}
+        </TabsContent>
 
-          <TabsContent value="delivered" className="space-y-4">
-            {getFilteredOrders().map((order) => (
-              <OrderCard
-                key={order.id}
-                order={order}
-                onStatusChange={handleStatusChange}
-              />
-            ))}
-          </TabsContent>
+        <TabsContent value="delivered" className="space-y-4">
+          {getFilteredOrders().map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onStatusChange={handleStatusChange}
+              onAssignDriver={handleAssignDriver}
+            />
+          ))}
+        </TabsContent>
 
-          <TabsContent value="cancelled" className="space-y-4">
-            {getFilteredOrders().map((order) => (
-              <OrderCard
-                key={order.id}
-                order={order}
-                onStatusChange={handleStatusChange}
-              />
-            ))}
-          </TabsContent>
-        </ScrollArea>
+        <TabsContent value="cancelled" className="space-y-4">
+          {getFilteredOrders().map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onStatusChange={handleStatusChange}
+              onAssignDriver={handleAssignDriver}
+            />
+          ))}
+        </TabsContent>
       </Tabs>
     </div>
   );

@@ -4,23 +4,29 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Phone, User } from "lucide-react";
 import { OrderCardProps, Order } from "@/types/orderManagTypes";
+import AssignDeliveryModal from "./assignDeliveryModal";
 
-const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
+const OrderCard: React.FC<OrderCardProps> = ({
+  order,
+  onStatusChange,
+  onAssignDriver,
+}) => {
   // Get status-based styling
   const getStatusColor = (status: Order["status"]) => {
     switch (status) {
       case "Pending":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+        return "bg-yellow-100 text-yellow-500 border-yellow-200";
+      case "Accepted":
+        return "bg-blue-100 text-blue-500 border-blue-200";
       case "Preparing":
-        return "bg-blue-100 text-blue-800 border-blue-200";
-      case "Ready":
-        return "bg-purple-100 text-purple-800 border-purple-200";
+        return "bg-orange-100 text-orange-500 border-orange-200";
+      case "Shipping":
+        return "bg-purple-100 text-purple-500 border-purple-200";
       case "Delivered":
-        return "bg-green-100 text-green-800 border-green-200";
+        return "bg-green-100 text-green-500 border-green-200";
       case "Cancelled":
-        return "bg-red-100 text-red-800 border-red-200";
+        return "bg-red-100 text-red-500 border-red-200";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
     }
@@ -34,9 +40,29 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
             <Button
               size="sm"
               className="bg-gray-800 hover:bg-gray-700 text-white"
-              onClick={() => onStatusChange?.(order.id, "Preparing")}
+              onClick={() => onStatusChange?.(order.id, "Accepted")}
             >
               Accept Order
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-red-600 border-red-200 hover:bg-red-50 bg-transparent"
+              onClick={() => onStatusChange?.(order.id, "Cancelled")}
+            >
+              Reject
+            </Button>
+          </div>
+        );
+      case "Accepted":
+        return (
+          <div className="flex gap-2">
+            <Button
+              size="sm"
+              className="bg-gray-800 hover:bg-gray-700 text-white"
+              onClick={() => onStatusChange?.(order.id, "Preparing")}
+            >
+              Prepared Order
             </Button>
             <Button
               size="sm"
@@ -51,12 +77,23 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
       case "Preparing":
         return (
           <div className="flex gap-2">
+            <AssignDeliveryModal
+              orderId={order.id}
+              onAssignDriver={onAssignDriver}
+            >
+              <Button
+                size="sm"
+                className="bg-gray-800 hover:bg-gray-700 text-white"
+              >
+                Assign Own Rider
+              </Button>
+            </AssignDeliveryModal>
             <Button
               size="sm"
               className="bg-gray-800 hover:bg-gray-700 text-white"
-              onClick={() => onStatusChange?.(order.id, "Ready")}
+              onClick={() => onStatusChange?.(order.id, "Shipping")}
             >
-              Ready for Pickup
+              Assign Global Rider
             </Button>
             <Button
               size="sm"
@@ -68,7 +105,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
             </Button>
           </div>
         );
-      case "Ready":
+      case "Shipping":
         return (
           <div className="flex gap-2">
             <Button
@@ -76,7 +113,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
               className="bg-gray-800 hover:bg-gray-700 text-white"
               onClick={() => onStatusChange?.(order.id, "Delivered")}
             >
-              Mark Delivered
+              Delivered Order
             </Button>
             <Button
               size="sm"
@@ -97,10 +134,25 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
             >
               Download Receipt
             </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-red-600 border-red-200 hover:bg-red-50 bg-transparent"
+            >
+              Delete
+            </Button>
           </div>
         );
       case "Cancelled":
-        return null;
+        return (
+          <Button
+            size="sm"
+            variant="outline"
+            className="text-red-600 border-red-200 hover:bg-red-50 bg-transparent"
+          >
+            Delete
+          </Button>
+        );
       default:
         return null;
     }
@@ -145,13 +197,13 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
           </div>
         </div>
         <div>
-          <div className="text-sm md:text-base text-black/50">
+          <div className="text-sm md:text-base text-black/70">
             <div className="flex items-center gap-1">
               <strong>Contact Number:</strong>
               {order.contactNo}
             </div>
           </div>
-          <div className="text-sm md:text-base text-black/50">
+          <div className="text-sm md:text-base text-black/70">
             <div className="flex items-center gap-1">
               <strong>Location:</strong> {order.location}
             </div>
@@ -161,11 +213,11 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
 
       {/* Order Items */}
       <div className="space-y-2">
-        <h4 className="font-medium text-gray-900 mt-2">Order Items:</h4>
+        <h4 className="font-medium text-black/70 mt-2">Order Items:</h4>
         {order.foodArray.map((item, index) => (
           <div
             key={index}
-            className="flex justify-between text-xs md:text-sm text-black/50 font-medium"
+            className="flex justify-between text-xs md:text-sm text-black/70 font-medium"
           >
             <span>
               {item.name} x{item.quantity}
@@ -178,44 +230,32 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onStatusChange }) => {
       </div>
 
       {/* Driver Information (if assigned) */}
-      {order.assignedDriver && (
-        <div className="mb-4 p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <User className="w-5 h-5 text-gray-500" />
-              <div>
-                <p className="font-medium text-gray-900">
-                  {order.assignedDriver.name}
-                </p>
-                <p className="text-sm text-gray-600 flex items-center">
-                  <Phone className="w-3 h-3 mr-1" />
-                  {order.assignedDriver.phone}
-                </p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">ETA</p>
-              <p className="text-sm text-gray-600">
-                {order.assignedDriver.eta}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Notes (if any) */}
-      {order.notes && (
-        <div className="mb-4 p-4 bg-blue-50 rounded-lg">
-          <p className="text-sm text-gray-700">
-            <span className="font-medium text-blue-800">Notes:</span>{" "}
-            {order.notes}
-          </p>
-        </div>
-      )}
 
       {/* Footer with Actions and Total */}
       <div className="flex w-full justify-between items-center pt-4 border-t border-gray-300">
-        <div></div>
+        <div>
+          {" "}
+          {order.assignedDriver && (
+            <div className="mb-4 p-2 bg-gray-50 rounded-lg">
+              <div className="flex items-center space-x-3">
+                <div>
+                  <p className=" text-black/70 text-xs">
+                    <strong className="mr-1">Driver:</strong>{" "}
+                    {order.assignedDriver.name}
+                  </p>
+                  <p className="text-xs text-black/70 flex items-center">
+                    <strong className="mr-1">Phone:</strong>
+                    {order.assignedDriver.phone}
+                  </p>
+                  <p className="text-xs text-black/70 flex items-center">
+                    <strong className="mr-1">ETA:</strong>
+                    {order.assignedDriver.eta}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         <div className="flex gap-2">{getActionButtons(order.status)}</div>
         <div className="text-right">
           <div className="text-xl font-bold text-gray-900">

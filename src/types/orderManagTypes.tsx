@@ -2,8 +2,9 @@
 
 export type OrderStatus =
   | "Pending"
+  | "Accepted"
   | "Preparing"
-  | "Ready"
+  | "Shipping"
   | "Delivered"
   | "Cancelled";
 
@@ -33,9 +34,6 @@ export interface Order {
   foodArray: FoodItem[];
   totalPrice: number;
   assignedDriver?: Driver;
-  orderTime: string;
-  estimatedDeliveryTime?: string;
-  notes?: string;
 }
 
 export interface OrderManagementProps {
@@ -47,4 +45,12 @@ export interface OrderManagementProps {
 export interface OrderCardProps {
   order: Order;
   onStatusChange?: (orderId: string, newStatus: OrderStatus) => void;
+  onAssignDriver?: (
+    orderId: string,
+    driverData: {
+      name: string;
+      phone: string;
+      eta: string;
+    }
+  ) => void;
 }
