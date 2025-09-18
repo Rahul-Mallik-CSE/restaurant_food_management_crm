@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({
             type="text"
             placeholder={searchPlaceholder}
             onChange={(e) => onSearchChange?.(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 h-12 bg-gray-50 border border-gray-200 rounded-full text-gray-700 placeholder-gray-400 focus:bg-white focus:border-custom-red focus:ring-custom-red focus:outline-none transition-all duration-200"
+            className="w-full pl-10 pr-4 py-2 h-12 bg-gray-30 border border-gray-500 rounded-xl text-gray-700 placeholder-gray-400 focus:bg-white focus:border-custom-red focus:ring-custom-red focus:outline-none transition-all duration-200"
           />
         </div>
       )}
