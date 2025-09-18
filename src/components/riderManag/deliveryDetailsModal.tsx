@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+
 import { RiderOrder } from "@/types/riderManagTypes";
 import Image from "next/image";
 

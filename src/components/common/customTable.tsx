@@ -1,7 +1,7 @@
 /** @format */
 "use client";
 import React, { useState } from "react";
-import { Info, Trash2, View } from "lucide-react";
+import { Info, View } from "lucide-react";
 import Image from "next/image";
 import {
   Table,
