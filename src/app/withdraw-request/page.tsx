@@ -41,9 +41,8 @@ export default function WithdrawRequestPage() {
         />
 
         {/* Custom Table */}
-        <div className="px-4 md:px-6">
-          <CustomTable data={tableData} columns={columns} actions={actions} />
-        </div>
+
+        <CustomTable data={tableData} columns={columns} actions={actions} />
       </div>
     </div>
   );

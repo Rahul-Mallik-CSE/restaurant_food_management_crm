@@ -1,7 +1,7 @@
 /** @format */
 "use client";
 import React, { useState } from "react";
-import { Info, Trash2, View } from "lucide-react";
+import { Info, Trash2 } from "lucide-react";
 import Image from "next/image";
 import {
   Table,
@@ -22,11 +22,13 @@ import {
 } from "@/components/ui/pagination";
 import OrderDetailsModal from "@/components/orderManag/orderDetailsModal";
 import PaymentDetailsModal from "@/components/payment/paymentDetailsModal";
-import { PaymentReceiptModal } from "@/components/common/paymentRecieptModal";
+import { PaymentReceiptModal } from "@/components/widthdrawRequest/paymentRecieptModal";
 import { TableColumn, TableProps } from "@/types/commonTypes";
 import { Order } from "@/types/orderManagTypes";
 import { Payment } from "@/types/paymentTypes";
 import { WithdrawRequest } from "@/types/widthdrawRequestTypes";
+import { RiderOrder } from "@/types/riderManagTypes";
+import { DeliveryDetailsModal } from "../riderManag/deliveryDetailsModal";
 
 const CustomTable: React.FC<TableProps> = ({
   columns,
@@ -45,12 +47,11 @@ const CustomTable: React.FC<TableProps> = ({
     Successful: "bg-green-100 text-green-800",
     Failed: "bg-red-100 text-red-800",
     Processing: "bg-blue-100 text-blue-800",
+    Pickup: "bg-yellow-100 text-yellow-800",
+    "On Ride": "bg-blue-100 text-blue-800",
   },
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [paymentReceiptOpen, setPaymentReceiptOpen] = useState(false);
-  const [selectedWithdraw, setSelectedWithdraw] =
-    useState<WithdrawRequest | null>(null);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
@@ -73,17 +74,29 @@ const CustomTable: React.FC<TableProps> = ({
 
     switch (column.type) {
       case "image":
+        // Determine which image and name to use based on column key
+        let imageKey = "profileImage";
+        let nameValue = value as string;
+
+        if (column.key === "customerName") {
+          imageKey = "customerImage";
+          nameValue = row.customerName as string;
+        } else if (column.key === "riderName") {
+          imageKey = "riderImage";
+          nameValue = row.riderName as string;
+        }
+
         return (
           <div className="flex items-center gap-2">
             <Image
-              src={(row.profileImage as string) || "/api/placeholder/40/40"}
+              src={(row[imageKey] as string) || "/api/placeholder/40/40"}
               alt="Profile"
               width={32}
               height={32}
               className="rounded-full object-cover bg-gray-200"
             />
             <span className="font-medium text-gray-900">
-              {(row.customerName as string) || (value as string)}
+              {nameValue || (value as string)}
             </span>
           </div>
         );
@@ -109,20 +122,30 @@ const CustomTable: React.FC<TableProps> = ({
       case "action":
         const isPaymentData = "orderId" in row && !("foodArray" in row);
         const isWithdrawData = "withdrawId" in row;
+        const isRiderData = "riderName" in row;
 
         return (
           <div className="flex items-center gap-2">
             {isWithdrawData ? (
-              <button
-                onClick={() => {
-                  setSelectedWithdraw(row as unknown as WithdrawRequest);
-                  setPaymentReceiptOpen(true);
-                }}
-                className="p-1.5 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
-                title="View Receipt"
+              <PaymentReceiptModal
+                withdrawData={row as unknown as WithdrawRequest}
               >
-                <Info className="w-4 h-4 text-gray-600" />
-              </button>
+                <button
+                  className="p-1.5 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
+                  title="View Receipt"
+                >
+                  <Info className="w-4 h-4 text-gray-600" />
+                </button>
+              </PaymentReceiptModal>
+            ) : isRiderData ? (
+              <DeliveryDetailsModal orderData={row as unknown as RiderOrder}>
+                <button
+                  className="p-1.5 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
+                  title="View Delivery Details"
+                >
+                  <Info className="w-4 h-4 text-gray-600" />
+                </button>
+              </DeliveryDetailsModal>
             ) : (
               actions.map((action, index) => {
                 if (action.type === "view") {
@@ -165,7 +188,7 @@ const CustomTable: React.FC<TableProps> = ({
                     title={action.type === "delete" ? "Delete" : "Receipt"}
                   >
                     {action.type === "delete" && (
-                      <View className="w-4 h-4 text-gray-600" />
+                      <Trash2 className="w-4 h-4 text-gray-600" />
                     )}
                     {action.type === "receipt" && (
                       <div className="w-4 h-4 text-gray-600">
@@ -342,16 +365,6 @@ const CustomTable: React.FC<TableProps> = ({
 
         {renderPagination()}
       </div>
-
-      {/* Payment Receipt Modal for Withdraw Requests */}
-      <PaymentReceiptModal
-        open={paymentReceiptOpen}
-        onClose={() => {
-          setPaymentReceiptOpen(false);
-          setSelectedWithdraw(null);
-        }}
-        withdrawData={selectedWithdraw}
-      />
     </div>
   );
 };
