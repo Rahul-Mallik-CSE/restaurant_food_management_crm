@@ -40,8 +40,8 @@ export default function OrderListPage() {
     {
       type: "view" as const,
       onClick: (order: Record<string, unknown>) => {
+        // This will be handled by the modal trigger
         console.log("View order:", order.id);
-        // Add your view logic here
       },
     },
     {

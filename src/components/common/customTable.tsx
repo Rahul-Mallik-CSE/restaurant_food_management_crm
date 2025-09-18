@@ -1,7 +1,7 @@
 /** @format */
-
+"use client";
 import React, { useState } from "react";
-import { Eye, Info, Trash2 } from "lucide-react";
+import { Info, Trash2, View } from "lucide-react";
 import Image from "next/image";
 import {
   Table,
@@ -20,7 +20,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import OrderDetailsModal from "@/components/orderManag/orderDetailsModal";
+import PaymentDetailsModal from "@/components/payment/paymentDetailsModal";
+import { PaymentReceiptModal } from "@/components/common/paymentRecieptModal";
 import { TableColumn, TableProps } from "@/types/commonTypes";
+import { Order } from "@/types/orderManagTypes";
+import { Payment } from "@/types/paymentTypes";
+import { WithdrawRequest } from "@/types/widthdrawRequestTypes";
 
 const CustomTable: React.FC<TableProps> = ({
   columns,
@@ -37,9 +43,15 @@ const CustomTable: React.FC<TableProps> = ({
     Cancelled: "bg-red-100 text-red-800",
     Preparing: "bg-orange-100 text-orange-800",
     Successful: "bg-green-100 text-green-800",
+    Failed: "bg-red-100 text-red-800",
+    Processing: "bg-blue-100 text-blue-800",
   },
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [paymentReceiptOpen, setPaymentReceiptOpen] = useState(false);
+  const [selectedWithdraw, setSelectedWithdraw] =
+    useState<WithdrawRequest | null>(null);
+
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -95,39 +107,79 @@ const CustomTable: React.FC<TableProps> = ({
         );
 
       case "action":
+        const isPaymentData = "orderId" in row && !("foodArray" in row);
+        const isWithdrawData = "withdrawId" in row;
+
         return (
           <div className="flex items-center gap-2">
-            {actions.map((action, index) => (
+            {isWithdrawData ? (
               <button
-                key={index}
-                onClick={() => action.onClick(row)}
-                className="p-1.5 rounded-full hover:bg-gray-100 transition-colors"
-                title={
-                  action.type === "view"
-                    ? "View"
-                    : action.type === "delete"
-                    ? "Delete"
-                    : "Receipt"
-                }
+                onClick={() => {
+                  setSelectedWithdraw(row as unknown as WithdrawRequest);
+                  setPaymentReceiptOpen(true);
+                }}
+                className="p-1.5 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
+                title="View Receipt"
               >
-                {action.type === "view" && (
-                  <Info className="w-4 h-4 text-gray-600" />
-                )}
-                {action.type === "delete" && (
-                  <Trash2 className="w-4 h-4 text-gray-600" />
-                )}
-                {action.type === "receipt" && (
-                  <div className="w-4 h-4 text-gray-600">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,4.11 20.1,3 19,3M19,19H5V5H19V19Z" />
-                    </svg>
-                  </div>
-                )}
+                <Info className="w-4 h-4 text-gray-600" />
               </button>
-            ))}
+            ) : (
+              actions.map((action, index) => {
+                if (action.type === "view") {
+                  if (isPaymentData) {
+                    return (
+                      <PaymentDetailsModal
+                        key={index}
+                        payment={row as unknown as Payment}
+                      >
+                        <button
+                          className="p-1.5 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
+                          title="View Payment Details"
+                        >
+                          <Info className="w-4 h-4 text-gray-600" />
+                        </button>
+                      </PaymentDetailsModal>
+                    );
+                  } else {
+                    return (
+                      <OrderDetailsModal
+                        key={index}
+                        order={row as unknown as Order}
+                      >
+                        <button
+                          className="p-1.5 cursor-pointer rounded-full hover:bg-gray-100 transition-colors"
+                          title="View Order Details"
+                        >
+                          <Info className="w-4 h-4 text-gray-600" />
+                        </button>
+                      </OrderDetailsModal>
+                    );
+                  }
+                }
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => action.onClick(row)}
+                    className="p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+                    title={action.type === "delete" ? "Delete" : "Receipt"}
+                  >
+                    {action.type === "delete" && (
+                      <View className="w-4 h-4 text-gray-600" />
+                    )}
+                    {action.type === "receipt" && (
+                      <div className="w-4 h-4 text-gray-600">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,4.11 20.1,3 19,3M19,19H5V5H19V19Z" />
+                        </svg>
+                      </div>
+                    )}
+                  </button>
+                );
+              })
+            )}
           </div>
         );
-
       default:
         return (
           <span className="text-gray-900">
@@ -290,6 +342,16 @@ const CustomTable: React.FC<TableProps> = ({
 
         {renderPagination()}
       </div>
+
+      {/* Payment Receipt Modal for Withdraw Requests */}
+      <PaymentReceiptModal
+        open={paymentReceiptOpen}
+        onClose={() => {
+          setPaymentReceiptOpen(false);
+          setSelectedWithdraw(null);
+        }}
+        withdrawData={selectedWithdraw}
+      />
     </div>
   );
 };
