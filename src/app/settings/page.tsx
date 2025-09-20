@@ -1,312 +1,67 @@
 /** @format */
 
+import Header from "@/components/common/header";
+import Link from "next/link";
+import Image from "next/image";
+import { ChevronRightIcon } from "lucide-react";
+
 export default function SettingsPage() {
   return (
-    <div className="flex flex-col space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <button className="px-4 py-2 bg-custom-red text-white rounded-lg hover:bg-custom-red/90 transition-colors">
-          Save Changes
-        </button>
-      </div>
+    <div className="min-h-screen bg-transparent pt-2 md:pt-6">
+      <div className="max-w-full mx-auto space-y-6">
+        {/* Header without Search */}
+        <Header
+          title="Settings"
+          description="Keep everything organized with smart settings"
+        />
 
-      {/* Restaurant Information */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <h2 className="text-lg font-semibold mb-4">Restaurant Information</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Restaurant Name
-            </label>
-            <input
-              type="text"
-              defaultValue="Pede Aqui Restaurant"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent"
-            />
-          </div>
+        {/* Settings Content */}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Contact Phone
-            </label>
-            <input
-              type="tel"
-              defaultValue="+1 234-567-8900"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              defaultValue="info@pedeaqui.com"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Cuisine Type
-            </label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent">
-              <option value="italian">Italian</option>
-              <option value="american">American</option>
-              <option value="chinese">Chinese</option>
-              <option value="mexican">Mexican</option>
-              <option value="indian">Indian</option>
-            </select>
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Address
-            </label>
-            <textarea
-              rows={3}
-              defaultValue="123 Main Street, Downtown, City, State 12345"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
-            <textarea
-              rows={4}
-              defaultValue="Welcome to Pede Aqui Restaurant! We serve authentic Italian cuisine made with fresh, local ingredients. Our cozy atmosphere and friendly service make us the perfect spot for family dinners and romantic dates."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Notification Settings */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <h2 className="text-lg font-semibold mb-4">Notification Settings</h2>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                New Order Notifications
-              </h3>
-              <p className="text-sm text-gray-500">
-                Receive alerts when new orders are placed
-              </p>
-            </div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                defaultChecked
-                className="form-checkbox h-4 w-4 text-custom-red focus:ring-custom-red border-gray-300 rounded"
+        <div className=" flex flex-col lg:flex-row gap-2 md:gap-6 ">
+          {/* Profile Section */}
+          <div className="flex flex-col items-center  border border-gray-200 py-6 px-12 rounded-xl gap-2 ">
+            <div className="relative">
+              <Image
+                src="/api/placeholder/80/80"
+                alt="Profile"
+                width={80}
+                height={80}
+                className="rounded-full object-cover bg-gray-200"
               />
-            </label>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                Order Status Updates
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-gray-500">Owner</p>
+              <h3 className="text-lg md:text-xl font-semibold text-gray-900">
+                Jhon Mancal
               </h3>
-              <p className="text-sm text-gray-500">
-                Get notified when order status changes
-              </p>
             </div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                defaultChecked
-                className="form-checkbox h-4 w-4 text-custom-red focus:ring-custom-red border-gray-300 rounded"
-              />
-            </label>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                Payment Confirmations
-              </h3>
-              <p className="text-sm text-gray-500">
-                Receive notifications for successful payments
-              </p>
-            </div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                defaultChecked
-                className="form-checkbox h-4 w-4 text-custom-red focus:ring-custom-red border-gray-300 rounded"
-              />
-            </label>
-          </div>
+          {/* Settings Menu */}
+          <div className=" w-full  flex flex-col gap-2 ">
+            <Link href="/settings/restaurant-information">
+              <div className="flex items-center w-full justify-between px-4 py-2 border border-red-300 rounded-lg bg-white hover:bg-gray-50 transition-colors cursor-pointer group">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                  <span className="text-gray-700 group-hover:text-gray-900">
+                    Restaurant Information
+                  </span>
+                </div>
+                <ChevronRightIcon className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+              </div>
+            </Link>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                Low Stock Alerts
-              </h3>
-              <p className="text-sm text-gray-500">
-                Get alerts when menu items are running low
-              </p>
-            </div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 text-custom-red focus:ring-custom-red border-gray-300 rounded"
-              />
-            </label>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                Marketing Updates
-              </h3>
-              <p className="text-sm text-gray-500">
-                Receive promotional and marketing emails
-              </p>
-            </div>
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 text-custom-red focus:ring-custom-red border-gray-300 rounded"
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-
-      {/* System Preferences */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <h2 className="text-lg font-semibold mb-4">System Preferences</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Language
-            </label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent">
-              <option value="en">English</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-              <option value="pt">Portuguese</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Time Zone
-            </label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent">
-              <option value="EST">Eastern Time (EST)</option>
-              <option value="CST">Central Time (CST)</option>
-              <option value="MST">Mountain Time (MST)</option>
-              <option value="PST">Pacific Time (PST)</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Currency
-            </label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent">
-              <option value="USD">USD ($)</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="GBP">GBP (£)</option>
-              <option value="CAD">CAD ($)</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Date Format
-            </label>
-            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-red focus:border-transparent">
-              <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-              <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-              <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Security Settings */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <h2 className="text-lg font-semibold mb-4">Security Settings</h2>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                Two-Factor Authentication
-              </h3>
-              <p className="text-sm text-gray-500">
-                Add an extra layer of security to your account
-              </p>
-            </div>
-            <button className="px-3 py-1 bg-custom-red text-white text-sm rounded-lg hover:bg-custom-red/90 transition-colors">
-              Enable
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                Change Password
-              </h3>
-              <p className="text-sm text-gray-500">
-                Update your account password
-              </p>
-            </div>
-            <button className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200 transition-colors">
-              Update
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                Login Activity
-              </h3>
-              <p className="text-sm text-gray-500">
-                View recent login activity and sessions
-              </p>
-            </div>
-            <button className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200 transition-colors">
-              View Activity
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Danger Zone */}
-      <div className="bg-white rounded-lg shadow-sm border border-red-200 p-6">
-        <h2 className="text-lg font-semibold text-red-600 mb-4">Danger Zone</h2>
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">Export Data</h3>
-              <p className="text-sm text-gray-500">
-                Download all your restaurant data
-              </p>
-            </div>
-            <button className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200 transition-colors">
-              Export
-            </button>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900">
-                Delete Account
-              </h3>
-              <p className="text-sm text-gray-500">
-                Permanently delete your restaurant account
-              </p>
-            </div>
-            <button className="px-3 py-1 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors">
-              Delete Account
-            </button>
+            <Link href="/settings/change-password">
+              <div className="flex items-center w-full justify-between px-4 py-2 border border-red-300 rounded-lg bg-white hover:bg-gray-50 transition-colors cursor-pointer group">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                  <span className="text-gray-700 group-hover:text-gray-900">
+                    Change password
+                  </span>
+                </div>
+                <ChevronRightIcon className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+              </div>
+            </Link>
           </div>
         </div>
       </div>
