@@ -14,9 +14,8 @@ export default function SchedulePage() {
         />
 
         {/* Schedule Form */}
-        <div className="px-4 md:px-6">
-          <ScheduleForm />
-        </div>
+
+        <ScheduleForm />
       </div>
     </div>
   );

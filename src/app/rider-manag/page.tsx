@@ -43,13 +43,12 @@ export default function RiderManagementPage() {
         />
 
         {/* Custom Table */}
-        <div className="px-4 md:px-6">
-          <CustomTable
-            data={tableData}
-            columns={columns}
-            actions={[]} // No actions needed since handled internally
-          />
-        </div>
+
+        <CustomTable
+          data={tableData}
+          columns={columns}
+          actions={[]} // No actions needed since handled internally
+        />
       </div>
     </div>
   );

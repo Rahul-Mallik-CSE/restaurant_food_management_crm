@@ -74,7 +74,7 @@ export default function ScheduleForm() {
     return (
       <div
         key={day}
-        className="flex items-center justify-between py-6 border-b border-gray-100 gap-2 "
+        className="flex items-center justify-between py-6 px-0  gap-2 "
       >
         <div className="flex items-center gap-4 w-32">
           <h3 className="text-lg font-medium text-gray-900">{day}</h3>
@@ -129,7 +129,7 @@ export default function ScheduleForm() {
   };
 
   return (
-    <div className="bg-white rounded-lg p-8 shadow-sm">
+    <div className=" ">
       <div className="space-y-1 overflow-x-auto">
         {(Object.keys(schedule) as Array<keyof WeekSchedule>).map((day) =>
           renderDayRow(day)
