@@ -3,7 +3,12 @@
 import Header from "@/components/common/header";
 import AnalyticsCard from "@/components/analytics/analyticsCard";
 import MenuItemsCard from "@/components/analytics/menuItemsCard";
-import { analyticsData, menuItemsData } from "@/data/analyticsData";
+import CustomerInsights from "@/components/analytics/customerInsights";
+import {
+  analyticsData,
+  menuItemsData,
+  customerInsightsData,
+} from "@/data/analyticsData";
 
 export default function AnalyticsPage() {
   return (
@@ -29,7 +34,9 @@ export default function AnalyticsPage() {
             <div>
               <MenuItemsCard menuItems={menuItemsData} />
             </div>
-            <div className="p-4 md:p-6 bg-white rounded-lg shadow"></div>
+            <div>
+              <CustomerInsights data={customerInsightsData} />
+            </div>
           </div>
         </div>
       </div>

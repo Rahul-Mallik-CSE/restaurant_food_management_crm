@@ -17,3 +17,17 @@ export interface MenuItemData {
   revenue: string;
   growthPercentage: number;
 }
+
+export interface CustomerInsightsData {
+  customerTypes: {
+    name: string;
+    value: number;
+    percentage: number;
+    color: string;
+  }[];
+  orderTimes: {
+    name: string;
+    orders: number;
+    percentage: number;
+  }[];
+}
