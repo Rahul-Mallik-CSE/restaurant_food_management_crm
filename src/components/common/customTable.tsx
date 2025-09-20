@@ -104,7 +104,7 @@ const CustomTable: React.FC<TableProps> = ({
       case "status":
         return (
           <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${
+            className={`px-3 py-1   rounded-sm text-xs font-medium ${
               statusColors[value as string] || "bg-gray-100 text-gray-800"
             }`}
           >
@@ -316,7 +316,7 @@ const CustomTable: React.FC<TableProps> = ({
               {columns.map((column) => (
                 <TableHead
                   key={column.key}
-                  className="text-white font-medium py-5"
+                  className="text-white font-medium py-4 text-lg md:text-xl"
                   style={column.width ? { width: column.width } : {}}
                 >
                   {column.label}
@@ -333,7 +333,7 @@ const CustomTable: React.FC<TableProps> = ({
                 {columns.map((column) => (
                   <TableCell
                     key={column.key}
-                    className="py-3 text-base md:text-lg"
+                    className="py-3 text-sm md:text-base"
                   >
                     {renderCell(row, column)}
                   </TableCell>
