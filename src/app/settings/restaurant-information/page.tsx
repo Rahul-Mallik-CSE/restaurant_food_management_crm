@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { ArrowLeftIcon, UploadIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,22 +16,75 @@ export default function RestaurantInformationPage() {
   const [ownerName, setOwnerName] = useState("John Doe");
   const [restaurantDetails, setRestaurantDetails] = useState("");
   const [restaurantAddress, setRestaurantAddress] = useState("");
-  const [uploadedImages, setUploadedImages] = useState([
-    "/api/placeholder/120/80",
-    "/api/placeholder/120/80",
-    "/api/placeholder/120/80",
-    "/api/placeholder/120/80",
-  ]);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const maxImages = 4;
 
   const handleImageRemove = (index: number) => {
     setUploadedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleFileSelect = useCallback(
+    (files: FileList) => {
+      const remainingSlots = maxImages - uploadedImages.length;
+      const filesToProcess = Array.from(files).slice(0, remainingSlots);
+
+      filesToProcess.forEach((file) => {
+        if (file.type.startsWith("image/") && file.size <= 5 * 1024 * 1024) {
+          // 5MB limit
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const result = e.target?.result as string;
+            setUploadedImages((prev) => [...prev, result]);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    },
+    [uploadedImages.length, maxImages]
+  );
+
   const handleImageUpload = () => {
-    // Simulate image upload
-    const newImage = "/api/placeholder/120/80";
-    setUploadedImages((prev) => [...prev, newImage]);
+    if (uploadedImages.length >= maxImages) return;
+    fileInputRef.current?.click();
   };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      handleFileSelect(files);
+    }
+    // Reset input value to allow selecting the same file again
+    if (e.target) {
+      e.target.value = "";
+    }
+  };
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+
+      if (uploadedImages.length >= maxImages) return;
+
+      const files = e.dataTransfer.files;
+      if (files) {
+        handleFileSelect(files);
+      }
+    },
+    [uploadedImages.length, maxImages, handleFileSelect]
+  );
 
   const handleSave = () => {
     console.log("Save restaurant information");
@@ -129,20 +182,64 @@ export default function RestaurantInformationPage() {
               <label className="text-base md:text-lg font-medium text-gray-700">
                 Restaurant Image Upload
               </label>
-              <span className="text-xs text-gray-500">Max photo upload: 4</span>
+              <span className="text-xs text-gray-500">
+                Max photo upload: {maxImages} ({uploadedImages.length}/
+                {maxImages} used)
+              </span>
             </div>
+
+            {/* Hidden File Input */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleFileInputChange}
+              className="hidden"
+            />
 
             {/* Upload Area */}
             <div
               onClick={handleImageUpload}
-              className="border-2 border-dashed bg-white border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-gray-400 transition-colors"
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`border-2 border-dashed bg-white rounded-lg p-8 text-center cursor-pointer transition-colors ${
+                isDragging
+                  ? "border-blue-400 bg-blue-50"
+                  : uploadedImages.length >= maxImages
+                  ? "border-gray-300 bg-gray-50 cursor-not-allowed opacity-50"
+                  : "border-gray-300 hover:border-gray-400"
+              }`}
             >
-              <UploadIcon className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-              <p className="text-sm text-gray-500 mb-1">
-                Drop here to attach or
+              <UploadIcon
+                className={`w-8 h-8 mx-auto mb-2 ${
+                  uploadedImages.length >= maxImages
+                    ? "text-gray-300"
+                    : "text-gray-400"
+                }`}
+              />
+              <p
+                className={`text-sm mb-1 ${
+                  uploadedImages.length >= maxImages
+                    ? "text-gray-400"
+                    : "text-gray-500"
+                }`}
+              >
+                {uploadedImages.length >= maxImages
+                  ? "Maximum images reached"
+                  : isDragging
+                  ? "Drop images here"
+                  : "Drop here to attach or"}
               </p>
-              <p className="text-sm text-blue-600 underline">upload</p>
-              <p className="text-xs text-gray-400 mt-2">Max size: 5MB</p>
+              {uploadedImages.length < maxImages && (
+                <>
+                  <p className="text-sm text-blue-600 underline">upload</p>
+                  <p className="text-xs text-gray-400 mt-2">
+                    Max size: 5MB per image
+                  </p>
+                </>
+              )}
             </div>
 
             {/* Uploaded Images */}
