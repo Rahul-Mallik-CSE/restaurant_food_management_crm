@@ -39,7 +39,7 @@ export default function PromotionCard({
           onClick={handleDelete}
           variant="destructive"
           size="sm"
-          className="w-32 bg-red-500 hover:bg-red-600 text-white font-medium py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200"
+          className="w-36 bg-red-500 hover:bg-red-600 text-white font-medium py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors duration-200"
         >
           Delete
         </Button>
