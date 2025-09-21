@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,7 @@ import Link from "next/link";
 import { ExtraItem } from "@/types/foodMenuTypes";
 import { menuManagData } from "@/data/menuManagData";
 
-export default function AddItemsPage() {
+function AddItemsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("edit");
@@ -474,5 +474,13 @@ export default function AddItemsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AddItemsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AddItemsContent />
+    </Suspense>
   );
 }

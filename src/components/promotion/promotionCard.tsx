@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { PromotionCard as PromotionCardType } from "@/types/promotionTypes";
-import { Trash2Icon } from "lucide-react";
 
 interface PromotionCardProps {
   promotion: PromotionCardType;

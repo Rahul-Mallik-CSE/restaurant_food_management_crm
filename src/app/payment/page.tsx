@@ -2,23 +2,14 @@
 
 "use client";
 
-import { useState } from "react";
 import Header from "@/components/common/header";
 import CustomTable from "@/components/common/customTable";
 import { TableColumn } from "@/types/commonTypes";
 import { paymentData } from "@/data/paymentData";
 
 export default function PaymentPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // Filter payments based on search term
-  const filteredPayments = paymentData.filter(
-    (payment) =>
-      payment.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.contactNo.includes(searchTerm) ||
-      payment.paymentMethod.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter payments - for now showing all payments
+  const filteredPayments = paymentData;
 
   // Define table columns
   const columns: TableColumn[] = [
@@ -50,11 +41,6 @@ export default function PaymentPage() {
       },
     },
   ];
-
-  // Handle search change
-  const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
-  };
 
   // Format date for display
   const formatDate = (dateString: string) => {

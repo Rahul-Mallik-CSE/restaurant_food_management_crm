@@ -7,7 +7,6 @@ import type React from "react";
 import Link from "next/link";
 import {
   LayoutGrid,
-  CircleUser,
   BookText,
   BadgePercent,
   ClipboardClock,
@@ -291,7 +290,7 @@ function DashboardSidebarContent() {
           <SidebarFooter className="p-6">
             <Button
               onClick={() => setIsLogoutModalOpen(true)}
-              className="flex w-32 items-center gap-3  px-4 py-3 bg-red-500 text-white hover:bg-red-600 rounded-lg"
+              className="flex justify-center w-32 items-center gap-3  px-4 py-3 bg-red-500 text-white hover:bg-red-600 rounded-lg"
             >
               <svg
                 width="25"
@@ -323,9 +322,7 @@ function DashboardSidebarContent() {
                 />
               </svg>
 
-              <span className="text-primary text-lg font-semibold">
-                Log out
-              </span>
+              <span className="text-white text-lg font-semibold">Log out</span>
             </Button>
           </SidebarFooter>
         )}

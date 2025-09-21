@@ -40,7 +40,7 @@ export default function LogoutModal({
           </Button>
           <Button
             onClick={onConfirm}
-            className="w-1/2 bg-red-500 hover:bg-red-600"
+            className="w-1/2 text-white bg-red-500 hover:bg-red-600"
           >
             Yes, Sign Out
           </Button>

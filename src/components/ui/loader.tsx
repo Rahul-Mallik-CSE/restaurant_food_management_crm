@@ -11,7 +11,6 @@ export const LoaderOne = () => {
       repeat: Infinity,
       repeatType: "loop" as const,
       delay: x * 0.2,
-      ease: "easeInOut",
     };
   };
   return (
@@ -57,7 +56,6 @@ export const LoaderTwo = () => {
       repeat: Infinity,
       repeatType: "loop" as const,
       delay: x * 0.2,
-      ease: "easeInOut",
     };
   };
   return (
@@ -131,7 +129,6 @@ export const LoaderFour = ({ text = "Loading..." }: { text?: string }) => {
     <div className="relative font-bold text-black [perspective:1000px] dark:text-white">
       <motion.span
         animate={{
-          skew: [0, -40, 0],
           scaleX: [1, 2, 1],
         }}
         transition={{
@@ -139,7 +136,6 @@ export const LoaderFour = ({ text = "Loading..." }: { text?: string }) => {
           repeat: Infinity,
           repeatType: "reverse",
           repeatDelay: 2,
-          ease: "linear",
           times: [0, 0.2, 0.5, 0.8, 1],
         }}
         className="relative z-20 inline-block"
@@ -157,7 +153,6 @@ export const LoaderFour = ({ text = "Loading..." }: { text?: string }) => {
           duration: 0.5,
           repeat: Infinity,
           repeatType: "reverse",
-          ease: "linear",
           times: [0, 0.2, 0.5, 0.8, 1],
         }}
       >
@@ -174,7 +169,6 @@ export const LoaderFour = ({ text = "Loading..." }: { text?: string }) => {
           duration: 0.8,
           repeat: Infinity,
           repeatType: "reverse",
-          ease: "linear",
           times: [0, 0.3, 0.6, 0.8, 1],
         }}
       >
@@ -206,7 +200,6 @@ export const LoaderFive = ({ text }: { text: string }) => {
             repeat: Infinity,
             repeatType: "loop",
             delay: i * 0.05,
-            ease: "easeInOut",
             repeatDelay: 2,
           }}
         >
