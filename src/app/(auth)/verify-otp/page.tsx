@@ -1,8 +1,8 @@
 /** @format */
 
-import { SignInForm } from "@/components/authentication/signIn-form";
+import { VerifyOtpForm } from "@/components/authentication/verify-otp-form";
 
-export default function SignIn() {
+export default function ForgetPass() {
   return (
     <div className="min-h-screen bg-[#fff4f1]">
       <div className="container mx-auto  ">
@@ -15,8 +15,8 @@ export default function SignIn() {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto h-full pt-10">
-          <SignInForm />
+        <div className="max-w-2xl mx-auto h-full pt-14">
+          <VerifyOtpForm />
         </div>
       </div>
     </div>

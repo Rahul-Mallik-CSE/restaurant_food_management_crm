@@ -104,12 +104,13 @@ export function SignInForm() {
                 Remember me
               </Label>
             </div>
-            <button
+            <Link
+              href={"/forget-pass"}
               type="button"
               className="text-sm text-gray-600 hover:text-red-600 hover:underline"
             >
               Forgot password?
-            </button>
+            </Link>
           </div>
 
           {/* Sign In Button */}

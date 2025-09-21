@@ -6,7 +6,7 @@ export default function SignUp() {
   return (
     <div className="min-h-screen bg-[#fff4f1]">
       <div className="container mx-auto ">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 pt-6">
           <h1 className="text-5xl font-bold mb-4 text[#33394c]">
             RestaurantHub
           </h1>
