@@ -158,7 +158,7 @@ export function ChangePassModal({ open, onOpenChange }: ChangePassModalProps) {
             <div className="pt-4">
               <Button
                 type="submit"
-                className="w-full h-12 text-white font-medium text-base rounded-xl hover:opacity-90 transition-opacity bg-red-600"
+                className="w-full h-12 text-white font-medium text-base rounded-xl hover:opacity-90 transition-opacity bg-red-600 hover:bg-red-700"
               >
                 Save Changes
               </Button>
