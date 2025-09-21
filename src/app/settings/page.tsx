@@ -1,11 +1,23 @@
 /** @format */
 
+"use client";
+
+import { useState } from "react";
 import Header from "@/components/common/header";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronRightIcon } from "lucide-react";
+import { ChangePassModal } from "@/components/settings/ChangePassModal";
 
 export default function SettingsPage() {
+  const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
+    useState(false);
+
+  const handleChangePasswordClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsChangePasswordModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-transparent pt-2 md:pt-6">
       <div className="max-w-full mx-auto space-y-6">
@@ -51,19 +63,26 @@ export default function SettingsPage() {
               </div>
             </Link>
 
-            <Link href="/settings/change-password">
-              <div className="flex items-center w-full justify-between px-4 py-2 border border-red-300 rounded-lg bg-white hover:bg-gray-50 transition-colors cursor-pointer group">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                  <span className="text-gray-700 group-hover:text-gray-900">
-                    Change password
-                  </span>
-                </div>
-                <ChevronRightIcon className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+            <div
+              onClick={handleChangePasswordClick}
+              className="flex items-center w-full justify-between px-4 py-2 border border-red-300 rounded-lg bg-white hover:bg-gray-50 transition-colors cursor-pointer group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                <span className="text-gray-700 group-hover:text-gray-900">
+                  Change password
+                </span>
               </div>
-            </Link>
+              <ChevronRightIcon className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
+            </div>
           </div>
         </div>
+
+        {/* Change Password Modal */}
+        <ChangePassModal
+          open={isChangePasswordModalOpen}
+          onOpenChange={setIsChangePasswordModalOpen}
+        />
       </div>
     </div>
   );
