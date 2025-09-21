@@ -43,7 +43,7 @@ export default function PromotionPage() {
         </div>
 
         {/* Promotion Cards Grid */}
-        <div className="px-4 md:px-6">
+        <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
             {promotions.map((promotion) => (
               <PromotionCard
