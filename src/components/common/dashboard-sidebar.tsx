@@ -72,12 +72,12 @@ function DashboardSidebarContent() {
   }, [pathname]);
 
   if (
-    pathname === "/signin" ||
-    pathname === "/create-account" ||
-    pathname === "/forget-password" ||
+    pathname === "/signIn" ||
+    pathname === "/signUp" ||
+    pathname === "/forget-pass" ||
     pathname === "/verify-password" ||
     pathname === "/verify-otp" ||
-    pathname === "/reset-password"
+    pathname === "/reset-pass"
   ) {
     return null;
   }
@@ -289,18 +289,9 @@ function DashboardSidebarContent() {
 
         {!isCollapsed && (
           <SidebarFooter className="p-6">
-            <NavItem
-              href="/profile"
-              icon={CircleUser}
-              label="Profile"
-              active={
-                pathname === "/profile" || pathname.startsWith("/profile/")
-              }
-              collapsed={isCollapsed}
-            />
-            <button
+            <Button
               onClick={() => setIsLogoutModalOpen(true)}
-              className="flex w-full items-center gap-3  px-4 py-3"
+              className="flex w-32 items-center gap-3  px-4 py-3 bg-red-500 text-white hover:bg-red-600 rounded-lg"
             >
               <svg
                 width="25"
@@ -335,7 +326,7 @@ function DashboardSidebarContent() {
               <span className="text-primary text-lg font-semibold">
                 Log out
               </span>
-            </button>
+            </Button>
           </SidebarFooter>
         )}
       </Sidebar>

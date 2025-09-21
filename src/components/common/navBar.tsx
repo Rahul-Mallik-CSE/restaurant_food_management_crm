@@ -4,14 +4,25 @@ import { useState } from "react";
 import { Search, ChevronDown, Bell, User } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("English");
   const [searchQuery, setSearchQuery] = useState("");
-
+  const pathname = usePathname();
   const languages = ["English", "Spanish", "French", "German"];
-
+  if (
+    pathname === "/signIn" ||
+    pathname === "/signUp" ||
+    pathname === "/forget-pass" ||
+    pathname === "/verify-password" ||
+    pathname === "/verify-otp" ||
+    pathname === "/reset-pass"
+  ) {
+    return null;
+  }
   return (
     <div className="w-full bg-white border-b border-gray-200">
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,9 +81,12 @@ export default function Navbar() {
             </Button>
 
             {/* User Profile */}
-            <Button className="relative p-2 bg-white hover:bg-gray-50 text-black hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 rounded-full">
+            <Link
+              href={"/settings/restaurant-information"}
+              className="relative p-2 bg-white hover:bg-gray-50 text-black hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 rounded-full"
+            >
               <User className="h-6 w-6" />
-            </Button>
+            </Link>
           </div>
         </div>
       </div>
