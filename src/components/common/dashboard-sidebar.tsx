@@ -196,16 +196,29 @@ function DashboardSidebarContent() {
               </Collapsible>
             ) : (
               /* Collapsed state - show just the orders icon */
-              <NavItem
-                href="/orders"
-                icon={ShoppingBag}
-                label="Orders"
-                active={
-                  pathname.startsWith("/orders") ||
-                  pathname.startsWith("/new-order")
-                }
-                collapsed={isCollapsed}
-              />
+              <>
+                <NavItem
+                  href="/new-order"
+                  icon={Plus}
+                  label="New Order"
+                  active={
+                    pathname.startsWith("/orders") ||
+                    pathname.startsWith("/new-order")
+                  }
+                  collapsed={isCollapsed}
+                />
+
+                <NavItem
+                  href="/order-list"
+                  icon={List}
+                  label="Order list"
+                  active={
+                    pathname.startsWith("/orders") ||
+                    pathname.startsWith("/order-list")
+                  }
+                  collapsed={isCollapsed}
+                />
+              </>
             )}
 
             <NavItem
@@ -286,7 +299,7 @@ function DashboardSidebarContent() {
           </SidebarMenu>
         </SidebarContent>
 
-        {!isCollapsed && (
+        {!isCollapsed ? (
           <SidebarFooter className="p-6">
             <Button
               onClick={() => setIsLogoutModalOpen(true)}
@@ -323,6 +336,43 @@ function DashboardSidebarContent() {
               </svg>
 
               <span className="text-white text-lg font-semibold">Log out</span>
+            </Button>
+          </SidebarFooter>
+        ) : (
+          <SidebarFooter className="p-6">
+            <Button
+              onClick={() => setIsLogoutModalOpen(true)}
+              className="flex justify-center items-center gap-3  px-4 py-1 bg-transparent  text-white hover:bg-red-200 rounded-lg"
+            >
+              <svg
+                width="25"
+                height="24"
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9.4 7.56023C9.71 3.96023 11.56 2.49023 15.61 2.49023H15.74C20.21 2.49023 22 4.28023 22 8.75023V15.2702C22 19.7402 20.21 21.5302 15.74 21.5302H15.61C11.59 21.5302 9.74 20.0802 9.41 16.5402"
+                  stroke="#4F3E19"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M15.5 12H4.12"
+                  stroke="#4F3E19"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M6.35 8.65039L3 12.0004L6.35 15.3504"
+                  stroke="#4F3E19"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </Button>
           </SidebarFooter>
         )}
