@@ -19,24 +19,19 @@ export default function AnalyticsPage() {
           title="Analytics"
           description="Track your restaurant's performance and financial metrics"
         />
-
         {/* Analytics Cards */}
-        <div className="px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {analyticsData.map((metric, index) => (
-              <AnalyticsCard key={index} metric={metric} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {analyticsData.map((metric, index) => (
+            <AnalyticsCard key={index} metric={metric} />
+          ))}
         </div>
 
-        <div className="px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div>
-              <MenuItemsCard menuItems={menuItemsData} />
-            </div>
-            <div>
-              <CustomerInsights data={customerInsightsData} />
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div>
+            <MenuItemsCard menuItems={menuItemsData} />
+          </div>
+          <div>
+            <CustomerInsights data={customerInsightsData} />
           </div>
         </div>
       </div>
