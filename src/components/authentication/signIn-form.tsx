@@ -11,13 +11,14 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Mail, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function SignInForm() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -28,6 +29,7 @@ export function SignInForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Sign in submitted:", formData);
+    router.push("/");
   };
 
   return (
